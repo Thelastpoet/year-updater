@@ -6,7 +6,7 @@ Description: This plugin allows you to update the year in the titles of your pos
 Version: 1.0
 Author: Ammanulah Emmanuel
 Author URI: 
-License: GPL2
+License: v3.0
 */
 function year_updater_styles() {
   wp_enqueue_style('year-updater', plugins_url('style.css', __FILE__));
