@@ -8,6 +8,11 @@ Author: Ammanulah Emmanuel
 Author URI: 
 License: v3.0
 */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 function year_updater_styles() {
   wp_enqueue_style('year-updater', plugins_url('style.css', __FILE__));
 }
