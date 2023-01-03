@@ -1,37 +1,34 @@
 <?php
-$old_year = $_POST['old_year'];
-$new_year = $_POST['new_year'];
+// "update.php" file
 
-$args = array(
-  'post_type' => 'post',
-  'post_status' => 'publish',
-  'posts_per_page' => -1,
-  's' => $old_year,
-);
-$posts = new WP_Query($args);
-if ($posts->have_posts()) {
-  while ($posts->have_posts()) {
-    $posts->the_post();
-    $post_id = get_the_ID();
-    $title = get_the_title();
-    $updated_title = str_replace($old_year, $new_year, $title);
-    wp_update_post(array(
-      'ID' => $post_id,
-      'post_title' => $updated_title,
-    ));
-    $post_content = get_the_content();
-    $updated_content = str_replace($old_year, $new_year, $post_content);
-    wp_update_post(array(
-      'ID' => $post_id,
-      'post_content' => $updated_content,
-    ));
-    $current_date = date('Y-m-d H:i:s');
-    wp_update_post(array(
-      'ID' => $post_id,
-      'post_modified' => $current_date,
-    ));
-  }
+// Get the old and new years from the form submission
+$old_year = intval($_POST['old_year']);
+$new_year = intval($_POST['new_year']);
+
+// Get an array of posts that have not been updated
+$posts = get_posts(array(
+  'numberposts' => -1,
+  'post_type'   => 'post',
+  'meta_key'    => '_year_updater_updated',
+  'meta_value'  => 0
+));
+
+// Update the year in the title and modified date for each post
+foreach ($posts as $post) {
+  $post_id = $post->ID;
+  $title = $post->post_title;
+  $modified_date = date('Y-m-d H:i:s');
+  $updated_title = str_replace($old_year, $new_year, $title);
+  wp_update_post(array(
+    'ID'           => $post_id,
+    'post_title'   => $updated_title,
+    'post_modified' => $modified_date
+  ));
+  update_post_meta($post_id, '_year_updater_updated', 1);
 }
 ?>
 
-<h2>Year updated successfully!</h2>
+<div class="wrap">
+  <h1>Year Updater</h1>
+  <p>The year has been successfully updated in all published post titles!</p>
+</div>
