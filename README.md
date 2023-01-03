@@ -17,6 +17,12 @@ To use the plugin, go to the "Year Updater" menu in the WordPress dashboard unde
 
 ## Changelog
 
+### 1.1
+
+The preview.php file was updated to show a table of the old and new post titles rather than a list.
+The update.php file was updated to only update the post titles and not the post content. It was also updated to use the wp_update_post() function and the update_post_meta() function to update the post data and add a custom field to mark the post as updated.
+Inline documentation was added to both the preview.php and update.php files to explain the code and its purpose.
+
 ### 1.0
 
 * Initial release
