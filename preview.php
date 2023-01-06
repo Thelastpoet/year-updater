@@ -22,7 +22,7 @@ echo '<h2>' . esc_html__('Preview of updated titles:', 'year-updater') . '</h2>'
 echo '<table class="wp-list-table widefat striped">';
 echo '<thead>';
 echo '<tr>';
-echo '<th>' . esc_html__('Post Title', 'year-updater') . '</th>';
+echo '<th>' . esc_html__('New Post Title', 'year-updater') . '</th>';
 echo '<th>' . esc_html__('Post ID', 'year-updater') . '</th>';
 echo '<th>' . esc_html__('Post Type', 'year-updater') . '</th>';
 echo '</tr>';
