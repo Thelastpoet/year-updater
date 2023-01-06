@@ -51,7 +51,7 @@ function year_updater_options() {
       <h1>Year Updater</h1>
       <form method="post" action="admin.php?page=year-updater&step=preview">
         <?php wp_nonce_field('year_updater_options'); ?>
-        <label for="old_year">Enter the year to update:</label>
+        <label for="old_year">Enter the year on your posts:</label>
         <input type="text" name="old_year" id="old_year" />
         <input type="submit" name="submit" value="Continue" />
       </form>
