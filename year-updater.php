@@ -6,56 +6,40 @@ Description: This plugin allows you to update the year in the titles of your pos
 Version: 1.1
 Author: Ammanulah Emmanuel
 Author URI: 
+Text Domain: year-updater
 License: GPL3.0
 */
-defined( 'ABSPATH' ) or die( 'No direct access allowed!' );
 
-/**
- * Enqueue the plugin stylesheet.
- */
-function year_updater_styles() {
-  wp_enqueue_style('year-updater', plugins_url('style.css', __FILE__));
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
 }
-add_action('admin_enqueue_scripts', 'year_updater_styles');
 
-/**
- * Add the plugin options page to the WordPress administration dashboard.
- */
-function year_updater_menu() {
-  add_options_page(
-    'Year Updater',
-    'Year Updater',
-    'manage_options',
-    'year-updater',
-    'year_updater_options'
-  );
+define('YEAR_UPDATER_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('YEAR_UPDATER_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('YEAR_UPDATER_PLUGIN_BASENAME', plugin_basename(__FILE__));
+
+require_once YEAR_UPDATER_PLUGIN_PATH . 'core.php';
+
+class Year_Updater_Main {
+
+    public function __construct() {
+        $this->year_updater = new Year_Updater();
+        $this->year_updater->register_hooks();
+    }
+
+    public function load_textdomain() {
+        load_plugin_textdomain('year-updater', false, basename(dirname(__FILE__)) . '/languages');
+    }
 }
-add_action('admin_menu', 'year_updater_menu');
 
-/**
- * Display the plugin options page.
- */
-function year_updater_options() {
-  if (!current_user_can('manage_options')) {
-    wp_die(__('You do not have sufficient permissions to access this page.'));
-  }
-
-  if (isset($_GET['step']) && $_GET['step'] == 'preview') {
-    include(plugin_dir_path(__FILE__) . 'preview.php');
-  } else if (isset($_GET['step']) && $_GET['step'] == 'update') {
-    include(plugin_dir_path(__FILE__) . 'update.php');
-  } else {
-    // Display the form to enter the year to update.
-    ?>
-    <div class="wrap">
-      <h1>Year Updater</h1>
-      <form method="post" action="admin.php?page=year-updater&step=preview">
-        <?php wp_nonce_field('year_updater_options'); ?>
-        <label for="old_year">Enter the year on your posts:</label>
-        <input type="text" name="old_year" id="old_year" />
-        <input type="submit" name="submit" value="Continue" />
-      </form>
-    </div>
-    <?php
-  }
+function init_year_updater() {
+    $year_updater_main = new Year_Updater_Main();
+    return $year_updater_main;
 }
+
+// Initialize the plugin
+global $year_updater_main;
+$year_updater_main = init_year_updater();
+
+// Load plugin text domain
+add_action('plugins_loaded', array($year_updater_main, 'load_textdomain'));
