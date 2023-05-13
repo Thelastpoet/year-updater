@@ -2,7 +2,7 @@
 Contributors: smartkenyan
 Tags: title, year, updater
 Requires at least: 4.7
-Tested up to: 6.1.1
+Tested up to: 6.2
 Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
