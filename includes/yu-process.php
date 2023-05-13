@@ -37,9 +37,14 @@ class YU_Process {
         }
 
         // Update the year in the title and modified date for each post
-        foreach ($posts as $post) {
+        foreach ($year_posts as $post) {
             $post_id = $post->ID;
             $title = $post->post_title;
+
+            // If the current year is in the title, skip this post
+            if (strpos($title, $this->year) !== false) {
+                continue;
+            }
 
             // Find a four-digit number (assumed to be a year) in the title and replace it with the new year
             $updated_title = preg_replace('/\b\d{4}\b/', $new_year, $title);

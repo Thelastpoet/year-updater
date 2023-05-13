@@ -1,0 +1,7 @@
+/*
+We will implement in the next update
+
+Ability to use AJAX to update the titles
+
+Show loading and spinning effects etc
+*/

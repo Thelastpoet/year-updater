@@ -70,6 +70,7 @@ class YU_Settings {
         <div class="wrap">
             <h1>Year Updater</h1>
             <h2>Queried Posts With Year in Title:</h2>
+            <p>Note: Posts with the current year in their title will be skipped during the process.</p>
             <form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
                 <input type="hidden" name="action" value="yu_update">
                 <input type="hidden" name="post_type" value="<?php echo esc_attr($post_type); ?>">
@@ -79,7 +80,7 @@ class YU_Settings {
             </form>
         </div>
         <?php
-    } 
+    }    
     
     public function handle_form_submission() {
         if (isset($_POST['submit']) && $_POST['submit'] === 'Update Posts' && isset($_POST['post_type'])) {
