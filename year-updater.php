@@ -3,9 +3,9 @@
 Plugin Name: Year Updater
 Plugin URI: https://nabaleka.com
 Description: This plugin allows you to update the year in the titles of your posts to the current year.
-Version: 1.1
+Version: 1.2
 Author: Ammanulah Emmanuel
-Author URI: 
+Author URI: https://nabaleka.com
 Text Domain: year-updater
 License: GPL3.0
 */
@@ -14,16 +14,17 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-define('YEAR_UPDATER_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('YEAR_UPDATER_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('YEAR_UPDATER_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('YU_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('YU_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('YU_VERSION', '1.2');
 
-require_once YEAR_UPDATER_PLUGIN_PATH . 'core.php';
+require_once YU_PLUGIN_PATH . 'yu-core.php';
+require_once YU_PLUGIN_PATH . 'includes/yu-cli-command.php';
 
 class Year_Updater_Main {
 
     public function __construct() {
-        $this->year_updater = new Year_Updater();
+        $this->year_updater = new YU_Core();
         $this->year_updater->register_hooks();
     }
 
