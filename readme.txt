@@ -14,7 +14,7 @@ A WordPress plugin to update the titles of posts with a specific year in their t
 
 == Description ==
 
-The Year Updater plugin allows you to update the titles of posts with a specific year in their title. For example, you can use the plugin to replace the year 2023 in the post titles with the current year.
+The Year Updater plugin allows you to update the titles of posts with a specific year in their title. For example, you can use the plugin to replace the year 2023 or previous years in the post titles with the current year.
 
 Updating year in blog post titles is an Old SEO trick that might give you a boost in the SERPS.
 
