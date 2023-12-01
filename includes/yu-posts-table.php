@@ -1,10 +1,12 @@
 <?php
 
+namespace YearUpdater;
+
 if ( ! defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-class YU_Posts_Table extends WP_List_Table {
+class YU_Posts_Table extends \WP_List_Table {
     private static $is_updating = false;
 
     public function __construct() {
@@ -34,6 +36,16 @@ class YU_Posts_Table extends WP_List_Table {
         return $columns;
     }
 
+    public function display() {
+        ?>
+        <h1><?php _e('Year Updater', 'year-updater'); ?></h1>
+        <h2><?php _e('Queried Posts With Year in Title:', 'year-updater'); ?></h2>
+        <p><?php _e('Note: Posts with the current year in their title will be skipped during the process.', 'year-updater'); ?></p>
+        <?php
+    
+        parent::display();
+    }
+    
     public function column_default($item, $column_name) {
         switch ($column_name) {
             case 'title':
@@ -65,39 +77,32 @@ class YU_Posts_Table extends WP_List_Table {
         return $title . $this->row_actions($actions);
     }
 
-    public function extra_tablenav($which) {
-        if ($which === 'top') {
-            ?>
-            <div class="alignleft actions">
-                <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
-                <input type="search" id="post-search-input" name="s" value="">
-                <input type="submit" id="search-submit" class="button" value="Search Posts">
-            </div>
-            <?php
-        }
-    }
-
     public function prepare_items() {
         $this->_column_headers = [$this->get_columns(), [], []];
-    
-        $post_type = isset($_REQUEST['post_type']) ? sanitize_text_field($_REQUEST['post_type']) : '';
+
+        $post_type = $this->post_type;
         $per_page = $this->get_items_per_page('posts_per_page');
         $current_page = $this->get_pagenum();
         $offset = ($current_page - 1) * $per_page;
-    
+
+        add_filter('posts_where', [$this, 'yu_posts_where'], 10, 2);
+        
         $args = [
             'posts_per_page' => $per_page,
             'post_type'   => $post_type,
             'post_status' => 'publish',
             'offset'      => $offset,
-            'yu_query_mode' => true
         ];
-    
-        $query = new WP_Query($args);
-    
-        $this->items = $query->posts;
-    
-        $total_items = $query->found_posts;
+
+        $query = new \WP_Query($args);
+        
+        $posts_with_year = array_filter($query->posts, function($post) {
+            return preg_match('/\b\d{4}\b/', $post->post_title);
+        });
+
+        $this->items = $posts_with_year;
+
+        $total_items = count($posts_with_year);
         $this->set_pagination_args([
             'total_items' => $total_items,
             'per_page'    => $per_page,

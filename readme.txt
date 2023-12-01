@@ -2,9 +2,9 @@
 Contributors: smartkenyan
 Tags: title, year, updater
 Requires at least: 4.7
-Tested up to: 6.2
-Stable tag: 1.2.0
-Requires PHP: 7.4
+Tested up to: 6.4.1
+Stable tag: 1.3.0
+Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,13 @@ No, you don't. After you update, you can remove the plugin. The changes will rem
 2. A preview of how your posts will look after you update screenshot-2.png
 
 == Changelog ==
+
+= 1.3.0 =
+* Organized the main plugin file for better readability and maintenance.
+* Refined the method for updating the year in post titles.
+* Introduced namespace usage for better code organization and to avoid name conflicts.
+* Modified the approach of querying posts to enhance performance, particularly for large datasets
+* Minor code improvements
 
 = 1.2.0 =
 * Better and faster code implementation
