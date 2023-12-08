@@ -8,13 +8,15 @@ if ( ! defined('ABSPATH')) {
 
 class YU_Posts_Table extends \WP_List_Table {
     private static $is_updating = false;
-
-    public function __construct() {
+    private $post_type;
+    
+    public function __construct($post_type) {
         parent::__construct([
             'singular' => __('Post', 'year-updater'),
             'plural'   => __('Posts', 'year-updater'),
             'ajax'     => false
         ]);
+        $this->post_type = $post_type;
         add_filter('posts_where', [$this, 'yu_posts_where'], 10, 2);
     }
 
