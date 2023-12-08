@@ -76,7 +76,7 @@ class YU_Settings {
             return preg_match('/\b\d{4}\b/', $post->post_title);
         });
     
-        $posts_table = new YU_Posts_Table();
+        $posts_table = new YU_Posts_Table($post_type);
     
         $posts_table->items = $posts_with_year;
     
