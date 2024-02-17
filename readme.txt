@@ -2,9 +2,9 @@
 Contributors: smartkenyan
 Tags: title, year, updater
 Requires at least: 4.7
-Tested up to: 6.4.1
-Stable tag: 1.3.0
-Requires PHP: 8.1
+Tested up to: 6.4.3
+Stable tag: 1.3.1
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,10 @@ No, you don't. After you update, you can remove the plugin. The changes will rem
 2. A preview of how your posts will look after you update screenshot-2.png
 
 == Changelog ==
+
+= 1.3.1 =
+* Improvement - Added custom post meta to reflect the change
+* Fixed an issue where only 1 post was getting updated
 
 = 1.3.0 =
 * Organized the main plugin file for better readability and maintenance.
