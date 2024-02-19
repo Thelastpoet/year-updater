@@ -41,7 +41,9 @@ No, you don't. After you update, you can remove the plugin. The changes will rem
 
 = 1.3.1 =
 * Improvement - Added custom post meta to reflect the change
+* Improvement - Introduced batch processing to prevent timeouts on sites with many posts
 * Fixed an issue where only 1 post was getting updated
+
 
 = 1.3.0 =
 * Organized the main plugin file for better readability and maintenance.
