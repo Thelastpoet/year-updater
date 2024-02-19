@@ -20,15 +20,15 @@ class YU_Posts_Table extends \WP_List_Table {
             'plural'   => __( 'Posts', 'year-updater' ),
             'ajax'     => false,
         ] );
+        
         $this->post_type = $post_type;
         add_filter( 'posts_where', [ $this, 'yu_posts_where' ], 10, 2 );
+        do_action( 'yu_posts_table_construct', $this);
     }
 
     public function yu_posts_where( $where, $wp_query ) {
         global $wpdb;
-        if ( $wp_query->get( 'yu_query_mode' ) ) {
-            $where .= " AND {$wpdb->posts}.post_title REGEXP '[0-9]{4}'";
-        }
+        $where .= " AND {$wpdb->posts}.post_title REGEXP '[0-9]{4}'";
         return $where;
     }
 
@@ -50,6 +50,7 @@ class YU_Posts_Table extends \WP_List_Table {
         <?php
 
         parent::display();
+        do_action('yu_after_table_display', $this);
     }
 
     public function column_default( $item, $column_name ) {
@@ -84,6 +85,8 @@ class YU_Posts_Table extends \WP_List_Table {
     }
 
     public function prepare_items() {
+        global $wpdb;
+
         $this->_column_headers = [ $this->get_columns(), [], [] ];
 
         $post_type = $this->post_type;
@@ -100,17 +103,16 @@ class YU_Posts_Table extends \WP_List_Table {
 
         $query = new \WP_Query( $args );
 
-        $posts_with_year = array_filter( $query->posts, function( $post ) {
-            return preg_match( '/\b\d{4}\b/', $post->post_title );
-        } );
+        $this->items = $query->posts;
 
-        $this->items = $posts_with_year;
-
-        $total_items = count( $posts_with_year );
-        $this->set_pagination_args( [
+        $total_items = $query->found_posts;
+        $this->set_pagination_args([
             'total_items' => $total_items,
             'per_page'    => $per_page,
-            'total_pages' => ceil( $total_items / $per_page ),
-        ] );
+            'total_pages' => ceil($total_items / $per_page),
+        ]);
+
+        // Action hook after items are prepared.
+        do_action('yu_posts_table_prepared_items', $this->items, $this);
     }
 }
