@@ -15,6 +15,7 @@ class YU_Process {
 
     public function update_year($post_type) {
         $new_year = $this->year;
+        $posts_updated = 0;
 
         // Batch processing
         $posts_per_page = 20; 
@@ -49,6 +50,7 @@ class YU_Process {
 
                     // Store a custom field to indicate the post title was updated with a new year.
                     update_post_meta($post_id, 'year_updated', $new_year);
+                    $posts_updated++;
                 }
             }
 
@@ -57,6 +59,6 @@ class YU_Process {
 
         } while (true);
 
-        return true;
+        return $posts_updated;
     }
 }

@@ -102,9 +102,9 @@ class YU_Settings {
     
             require_once YU_PLUGIN_PATH . 'includes/yu-process.php';
             $yu_process = new YU_Process();
-            $result = $yu_process->update_year( $post_type );
+            $updated_count = $yu_process->update_year($post_type);
     
-            $query_args = is_wp_error( $result ) ? [ 'message' => 'error' ] : [ 'message' => 'success', 'post_type' => $post_type ];
+            $query_args = ['message' => 'success', 'post_type' => $post_type, 'updated' => $updated_count];
     
             wp_safe_redirect( add_query_arg( $query_args, admin_url( 'admin.php?page=year-updater' ) ) );
             exit;
@@ -122,12 +122,15 @@ class YU_Settings {
     }
 
     private function display_success_notice() {
+        $updated_count = isset($_GET['updated']) ? intval($_GET['updated']) : 0;
+    
         ?>
         <div class="notice notice-success is-dismissible">
-            <p><?php _e( 'All Posts updated successfully!', 'year-updater' ); ?></p>
+            <p><?php echo esc_html(sprintf(_n('%s Post updated successfully!', '%s Posts updated successfully!', $updated_count, 'year-updater'), $updated_count)); ?></p>
         </div>
         <?php
     }
+    
 
     private function display_error_notice() {
         ?>

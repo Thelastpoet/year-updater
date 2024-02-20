@@ -33,10 +33,6 @@ Option one is easy and faster.
 
 No, you don't. After you update, you can remove the plugin. The changes will remain on site.
 
-== Screenshots ==
-1. When you visit settings, year update, you get to input the current year screenshot-1.png
-2. A preview of how your posts will look after you update screenshot-2.png
-
 == Changelog ==
 
 = 1.3.1 =
